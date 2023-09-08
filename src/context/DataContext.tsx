@@ -2,6 +2,7 @@ import React, { createContext } from "react";
 
 export type ServerResponse = {
   id: string;
+  url: string;
   ttlInSeconds: number;
   expiration: string;
   createdDate: string;

@@ -9,6 +9,7 @@ type DataProviderProps = {
 export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   const serverResponse: ServerResponse = {
     id: "",
+    url: "",
     ttlInSeconds: 60,
     createdDate: "",
     expiration: "",

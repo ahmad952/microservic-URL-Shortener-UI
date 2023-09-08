@@ -1,15 +1,16 @@
-import { format } from "date-fns";
 import React, { createContext, useContext, useState } from "react";
 import DataContext, { ServerResponse } from "../context/DataContext";
-
+import { Button, TextField, Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 type Requestbody = {
   url: string;
   ttlInSeconds: number;
 };
 
-function App() {
+function InputField() {
   const [url, setUrl] = useState("");
   const dataContext = useContext(DataContext);
+  const { t } = useTranslation();
 
   if (!dataContext) {
     throw new Error("App must be wrapped with DataProvider");
@@ -49,26 +50,33 @@ function App() {
 
       console.log(data1);
       console.log(data1.id);
-      console.log(format(new Date(data1.createdDate), "dd.MM.yyyy HH:mm:ss"));
     } catch (error) {
       console.error("Fehler:", error);
     }
   };
 
   return (
-    <div>
-      <input
-        type="url"
+    <Box
+      display="flex"
+      flexDirection="row"
+      alignItems="center"
+      justifyContent="start"
+      p={2}
+      style={{ gap: "16px" }}
+    >
+      <TextField
+        id="outlined-controlled"
+        label={`URL ${t("input")}`}
         value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        placeholder="URl eingeben"
-        required
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setUrl(event.target.value);
+        }}
       />
-      <button type="button" onClick={sent}>
-        URl verkürzen
-      </button>
-    </div>
+      <Button variant="contained" onClick={sent}>
+        URl {t("shorten")}
+      </Button>
+    </Box>
   );
 }
 
-export default App;
+export default InputField;
