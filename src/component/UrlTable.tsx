@@ -6,18 +6,31 @@ import {
   TableHead,
   TableRow,
   IconButton,
-  Button,
 } from "@mui/material";
-
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ServerResponse } from "../context/DataContext";
+
 function UrlTable() {
   const [data, setData] = useState<ServerResponse[]>([]);
   //Aut
   const username = "abat";
   const password = "5hWDEcFK4FUW";
   const base64 = btoa(username + ":" + password);
+
+  const handleSort = (data: ServerResponse[]) => {
+    const sortedData = data.sort((a, b) => {
+      if (a.id < b.id) {
+        return -1;
+      }
+      if (a.id > b.id) {
+        return 1;
+      }
+      return 0;
+    });
+
+    setData(sortedData);
+  };
 
   useEffect(() => {
     fetch("https://urlshortener.smef.io/urls", {
@@ -28,8 +41,28 @@ function UrlTable() {
       },
     })
       .then((response) => response.json())
-      .then((data) => setData(data));
+      .then((data) => handleSort(data));
   }, []);
+
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await fetch(`https://urlshortener.smef.io/urls/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Basic " + base64,
+        },
+      });
+      if (response.ok) {
+        const newData = data.filter((item) => item.id !== id);
+        handleSort(newData);
+      } else {
+        console.error(`Failed to delete item with ID ${id}.`);
+      }
+    } catch (error) {
+      console.error("There was an error deleting the item:", error);
+    }
+  };
 
   return (
     <Table>
@@ -55,7 +88,11 @@ function UrlTable() {
               <IconButton onClick={() => {}}>
                 <EditIcon />
               </IconButton>
-              <IconButton onClick={() => {}}>
+              <IconButton
+                onClick={() => {
+                  handleDelete(item.id);
+                }}
+              >
                 <DeleteIcon />
               </IconButton>
             </TableCell>
