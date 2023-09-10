@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Output from "../component/Output";
 import InputField from "../component/InputField";
 import Box from "@mui/material/Box/Box";
 
 function UserScreen() {
+  const [createdUrlId, setCreatedUrlId] = useState("");
   return (
     <Box
       display="flex"
@@ -14,8 +15,8 @@ function UserScreen() {
       width="100%"
     >
       <Box>
-        <InputField />
-        <Output />
+        <InputField setCreatedUrlId={setCreatedUrlId} />
+        <Output createdUrlId={createdUrlId} />
       </Box>
     </Box>
   );

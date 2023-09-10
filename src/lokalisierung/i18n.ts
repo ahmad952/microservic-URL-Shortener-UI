@@ -11,7 +11,15 @@ const resources = {
         "copy": "Copy",
         "execute": "Execute",
         "shorten": "Shorten",
-        "language": "En"
+        "language": "En",
+        "add": "Add data",
+        "createdDate": "createdDate",
+        "modifiedDate": "modifiedDate",
+        "Actions":"Actions",
+        "enterUrl":"Please enter the URL:",
+        "enterID": "Please enter the ID:"
+
+
     }
 
   },
@@ -22,7 +30,14 @@ const resources = {
         "copy": "Kopieren",
         "execute": "Ausführen",
         "shorten": "Verkürzen",
-        "language": "De"
+        "language": "De",
+        "add": "Daten hinzufügen",
+        "createdDate": "Erstellungsdatum",
+        "modifiedDate": "Änderungsdatum",
+        "Actions":"Aktionen",
+        "enterUrl":"Bitte geben Sie die URL ein:",
+        "enterID": "Bitte geben Sie die ID ein:"
+
     },
     
   }

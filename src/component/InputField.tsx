@@ -4,15 +4,14 @@ import { Button, TextField, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import useAddData from "../hoocks/useAddData";
 
-function InputField() {
+type InputFieldProps = {
+  setCreatedUrlId: React.Dispatch<React.SetStateAction<string>>;
+};
+
+function InputField({ setCreatedUrlId }: InputFieldProps) {
   const { t } = useTranslation();
 
-  //Aut
-  const username = "abat";
-  const password = "5hWDEcFK4FUW";
-  const base64 = btoa(username + ":" + password);
-
-  const { url, setUrl, sent } = useAddData(base64);
+  const { url, setUrl, send } = useAddData(setCreatedUrlId);
 
   return (
     <Box
@@ -31,7 +30,7 @@ function InputField() {
           setUrl(event.target.value);
         }}
       />
-      <Button variant="contained" onClick={sent}>
+      <Button variant="contained" onClick={(e) => send(e, url)}>
         URl {t("shorten")}
       </Button>
     </Box>

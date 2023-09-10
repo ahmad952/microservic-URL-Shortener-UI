@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
-import DataContext from "../context/DataContext";
 import { Button, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-function Output() {
-  const dataContext = useContext(DataContext);
-  const url = `https://urlshortener.smef.io/${dataContext?.data?.id || ""}`;
-  const { t } = useTranslation();
+type OutputProps = {
+  createdUrlId: string;
+};
 
+function Output({ createdUrlId }: OutputProps) {
+  const url = `https://urlshortener.smef.io/${createdUrlId}`;
+  const { t } = useTranslation();
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
   };
@@ -24,9 +24,9 @@ function Output() {
       <Box
         component="span"
         sx={{ pl: 1, pr: 1, border: "1px solid  grey" }}
-        width={dataContext?.data?.id == "" ? 200 : 220}
+        width={createdUrlId == "" ? 200 : 220}
       >
-        <p>{dataContext?.data?.id == "" ? t("output") : url}</p>
+        <p>{createdUrlId == "" ? t("output") : url}</p>
       </Box>
 
       <Button variant="contained" onClick={handleCopy}>

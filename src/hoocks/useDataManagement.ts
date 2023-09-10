@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { ServerResponse } from '../context/DataContext'
 
-const useDataManagement = (base64 :string) => {
+const useDataManagement = () => {
 
-    const [ModifyData, setData] = useState<ServerResponse[]>([]);
+    const [DataManagement, setData] = useState<ServerResponse[]>([]);
 
 
 
@@ -15,6 +15,11 @@ const useDataManagement = (base64 :string) => {
         setData(sortedData);
         
          };
+
+ //Aut
+ const username = process.env.REACT_APP_USERNAME;
+ const password = process.env.REACT_APP_PASSWORD;
+ const base64 = btoa(username + ":" + password);
 
 
 
@@ -28,7 +33,7 @@ const useDataManagement = (base64 :string) => {
             },
           });
           if (response.ok) {
-            const newData = ModifyData.filter((item) => item.id !== id);
+            const newData = DataManagement.filter((item) => item.id !== id);
             handleSort(newData);
           } else {
             console.error(`Failed to delete item with ID ${id}.`);
@@ -60,7 +65,7 @@ const useDataManagement = (base64 :string) => {
 
 
 
-      return { ModifyData, handleDelete, getData };
+      return { DataManagement, handleDelete, getData };
 }
 
 

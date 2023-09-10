@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   Table,
   TableBody,
@@ -6,23 +7,35 @@ import {
   TableHead,
   TableRow,
   IconButton,
+  Button,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ServerResponse } from "../context/DataContext";
 import useDataManagement from "../hoocks/useDataManagement";
+import { useTranslation } from "react-i18next";
+import useAddData from "../hoocks/useAddData";
 
 function UrlTable() {
-  //Aut
-  const username = "abat";
-  const password = "5hWDEcFK4FUW";
-  const base64 = btoa(username + ":" + password);
+  const { t } = useTranslation();
 
-  const { ModifyData, handleDelete, getData } = useDataManagement(base64);
+  const { DataManagement, handleDelete, getData } = useDataManagement();
+
+  const { sendWithID } = useAddData();
+
+  const handleAddClick = () => {
+    const url = prompt("Bitte geben Sie die URL ein:");
+    if (!url) return;
+
+    const idPrompt = prompt("Bitte geben Sie die ID ein:");
+
+    const idn = idPrompt ? idPrompt.trim() : "";
+    sendWithID(idn, url);
+  };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [sendWithID]);
 
   return (
     <Table>
@@ -31,13 +44,17 @@ function UrlTable() {
           <TableCell>ID</TableCell>
           <TableCell>URL</TableCell>
           <TableCell>TTL</TableCell>
-          <TableCell>Erstellungsdatum</TableCell>
-          <TableCell>Änderungsdatum</TableCell>
-          <TableCell>Aktionen</TableCell>
+          <TableCell>{t("createdDate")}</TableCell>
+          <TableCell>{t("modifiedDate")}</TableCell>
+          <TableCell>
+            <Button variant="contained" onClick={handleAddClick}>
+              {t("add")}
+            </Button>
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {ModifyData.map((item) => (
+        {DataManagement.map((item) => (
           <TableRow key={item.id}>
             <TableCell>{item.id}</TableCell>
             <TableCell>{item.url}</TableCell>

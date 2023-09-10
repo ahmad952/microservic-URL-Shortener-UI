@@ -20,12 +20,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import i18n from "../lokalisierung/i18n";
 import { useTranslation } from "react-i18next";
+import { Paths } from "../routes";
 
 function AppBarAll() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isDe, setIsDe] = useState(true);
   const navigate = useNavigate();
-  const paths = ["/", "/admin"];
   const { t } = useTranslation();
 
   const handleDrawerToggle = () => {
@@ -50,10 +50,13 @@ function AppBarAll() {
   const list = (
     <Box sx={{ width: 250 }} role="presentation">
       <List>
-        {["User input mask", "Admen overview"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton onClick={() => handleNavigation(paths[index])}>
-              <ListItemText primary={text} />
+        {[
+          { text: "User input mask", path: Paths.UserInputMask },
+          { text: "Admin overview", path: Paths.AdminOverview },
+        ].map((item) => (
+          <ListItem key={item.text} disablePadding>
+            <ListItemButton onClick={() => handleNavigation(item.path)}>
+              <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
