@@ -46,11 +46,11 @@ function UrlTable() {
   };
 
   const handleAddClick = () => {
-    const url = prompt("Bitte geben Sie die URL ein:");
+    const url = prompt(t("enterUrl"));
     if (!url) return;
 
     if (url && handleUrlCheck(url)) {
-      const idPrompt = prompt("Bitte geben Sie die ID ein:");
+      const idPrompt = prompt(t("enterID"));
       const idn = idPrompt ? idPrompt.trim() : "";
       sendWithID(idn, url);
       setMessage(errorMessageAdd);
@@ -132,7 +132,7 @@ function UrlTable() {
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}
-          severity="warning"
+          severity="error"
           sx={{ width: "100%" }}
         >
           {Message}

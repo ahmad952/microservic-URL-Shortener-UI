@@ -4,13 +4,15 @@ import UrlTable from "../component/UrlTable";
 const AdminScreen = () => {
   return (
     <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      width="100%"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+      }}
     >
-      <Box width="800px">
+      <Box sx={{ width: "800px" }}>
         <UrlTable />
       </Box>
     </Box>

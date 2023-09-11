@@ -9,7 +9,7 @@ const resources = {
         "input": "Input",
         "output": "Output",
         "copy": "Copy",
-        "execute": "Execute",
+        "execute": "Open",
         "shorten": "Shorten",
         "language": "EN",
         "add": "Add data",
@@ -20,7 +20,7 @@ const resources = {
         "enterID": "Please enter the ID:",
         "cancel"  : "Cancel",
         "URLEdit" :"URL and TTL Edit",
-        "switch"   : "to germany",
+        "switch"   : "in German",
         "validURL":"Please enter a valid URL!"
 
   
@@ -33,7 +33,7 @@ const resources = {
         "input": "Eingeben",
         "output": "Ausgabe",
         "copy": "Kopieren",
-        "execute": "Ausführen",
+        "execute": "Öffnen",
         "shorten": "Verkürzen",
         "language": "DE",
         "add": "Daten hinzufügen",

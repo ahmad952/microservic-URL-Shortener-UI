@@ -51,7 +51,7 @@ const  addToServer = async(id:string, url:string) =>{
         case 400:
           throw new Error("Bad Request");
         case 409:
-          throw new Error("Conflict if the url already exists");
+          throw new Error("ID already exists");
         case 500:
           throw new Error("Internal Server Error");
         default:

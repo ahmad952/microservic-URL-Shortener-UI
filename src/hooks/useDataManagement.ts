@@ -69,10 +69,12 @@ const useDataManagement = () => {
           if (!isNaN(Number(idA))) return -1;
       
           if (!isNaN(Number(idB))) return 1;
-      
+
+          const lowerIdA = idA.toLowerCase();
+          const lowerIdB = idB.toLowerCase();
           
-          if (idA < idB) return -1;
-          if (idA > idB) return 1;
+          if (lowerIdA < lowerIdB) return -1;
+          if (lowerIdA > lowerIdB) return 1;
           return 0;
         });
         return array;

@@ -1,4 +1,4 @@
-import { Button, Box } from "@mui/material";
+import { Button, Box, Paper } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 type OutputProps = {
@@ -14,20 +14,27 @@ function Output({ createdUrlId }: OutputProps) {
 
   return (
     <Box
-      display="flex"
-      flexDirection="row"
-      alignItems="center"
-      justifyContent="start"
-      p={2}
-      style={{ gap: "16px" }}
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "start",
+        p: 2,
+        gap: 2,
+      }}
     >
-      <Box
-        component="span"
-        sx={{ pl: 1, pr: 1, border: "1px solid  grey" }}
-        width={createdUrlId == "" ? 200 : 220}
+      <Paper
+        elevation={0}
+        sx={{
+          pl: 1,
+          pr: 1,
+          border: createdUrlId !== "" ? "1px solid black" : "1px solid #d3d3d3",
+          color: createdUrlId !== "" ? "black" : "grey",
+          width: createdUrlId == "" ? 205 : 220,
+        }}
       >
         <p>{createdUrlId == "" ? t("output") : url}</p>
-      </Box>
+      </Paper>
 
       <Button variant="contained" onClick={handleCopy}>
         {t("copy")}

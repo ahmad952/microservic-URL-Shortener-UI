@@ -86,11 +86,13 @@ function EditDialog({ selectedId }: EditDialogProps) {
         <DialogTitle id="responsive-dialog-title">{t("URLEdit")}</DialogTitle>
         <DialogContent>
           <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            p={2}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              p: 2,
+            }}
           >
             <TextField
               id="id-controlled"

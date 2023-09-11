@@ -25,12 +25,14 @@ function InputField({ setCreatedUrlId }: InputFieldProps) {
 
   return (
     <Box
-      display="flex"
-      flexDirection="row"
-      alignItems="center"
-      justifyContent="start"
-      p={2}
-      style={{ gap: "16px" }}
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "start",
+        p: 2,
+        gap: "16px",
+      }}
     >
       <TextField
         id="outlined-controlled"

@@ -7,12 +7,14 @@ function UserScreen() {
   const [createdUrlId, setCreatedUrlId] = useState<string>("");
   return (
     <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      height="30vh"
-      width="100%"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "30vh",
+        width: "100%",
+      }}
     >
       <Box>
         <InputField setCreatedUrlId={setCreatedUrlId} />
