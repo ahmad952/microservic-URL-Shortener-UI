@@ -24,7 +24,7 @@ function Output({ createdUrlId }: OutputProps) {
       }}
     >
       <Paper
-        elevation={0}
+        elevation={createdUrlId === "" ? 0 : 3}
         sx={{
           pl: 1,
           pr: 1,
