@@ -57,9 +57,7 @@ const  addToServer = async(id:string, url:string) =>{
         default:
           throw new Error("unknown error");
       }
-    }  
-    console.log(response.body);
-    
+    }      
     
     const data: ServerResponse = await response.json();
     handleAddNewItem(data);
@@ -69,8 +67,6 @@ const  addToServer = async(id:string, url:string) =>{
       setCreatedUrlId(data.id);
   }
      }
-
-    console.log(data);
     
   } catch (error) {
     console.error("Fehler:", error);
