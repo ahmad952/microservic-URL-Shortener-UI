@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -10,21 +10,19 @@ import {
   List,
   Drawer,
   ListItem,
-  ListItemIcon,
   ListItemText,
   ListItemButton,
-  Divider,
+  Tooltip,
 } from "@mui/material";
-
-import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import MenuIcon from "@mui/icons-material/Menu";
 import i18n from "../lokalisierung/i18n";
 import { useTranslation } from "react-i18next";
 import { Paths } from "../routes";
 
 function AppBarAll() {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isDe, setIsDe] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [isDe, setIsDe] = useState<boolean>(true);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -80,16 +78,28 @@ function AppBarAll() {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Microservice
         </Typography>
+        <Tooltip title={t("switch")}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="language"
+            sx={{ mr: 1 }}
+            onClick={() => handleLanguage()}
+          >
+            {t("language")}
+          </IconButton>
+        </Tooltip>
 
         <IconButton
           size="large"
           edge="start"
           color="inherit"
           aria-label="language"
-          sx={{ mr: 2 }}
-          onClick={() => handleLanguage()}
+          sx={{ mr: 1 }}
+          onClick={() => {}}
         >
-          {t("language")}
+          <AccountCircle />
         </IconButton>
       </Toolbar>
     </AppBar>

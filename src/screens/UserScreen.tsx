@@ -4,7 +4,7 @@ import InputField from "../component/InputField";
 import Box from "@mui/material/Box/Box";
 
 function UserScreen() {
-  const [createdUrlId, setCreatedUrlId] = useState("");
+  const [createdUrlId, setCreatedUrlId] = useState<string>("");
   return (
     <Box
       display="flex"

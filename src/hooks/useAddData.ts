@@ -1,20 +1,20 @@
 import { useState,useContext } from 'react'
-import DataContext, { ServerResponse } from '../context/DataContext';
+import { RequestBody, ServerResponse } from '../models/dataTypes';
+import DataContext from '../context/DataContext';
 
-type RequestBody = {
-    url: string;
-    ttlInSeconds: number;
-  };
+
 
 function useAddData(setCreatedUrlId: React.Dispatch<React.SetStateAction<string>> = () => {}) {
  
  const [url,setUrl]= useState<string>("")
+ const [errorMessageAdd,setErrorMessage]= useState<string>("")
  const dataContext = useContext(DataContext);
  if (!dataContext) {
   throw new Error("DataContext is not available!");
 }
  
-const { setData } = dataContext;
+const { data,setDataList } = dataContext;
+
 
   
 //Aut
@@ -47,20 +47,39 @@ const  addToServer = async(id:string, url:string) =>{
     });
 
     if (!response.ok) {
-      throw new Error("Netzwerkantwort war nicht ok.");
-    }      const data1: ServerResponse = await response.json();
-
+      switch(response.status) {
+        case 400:
+          throw new Error("Bad Request");
+        case 409:
+          throw new Error("Conflict if the url already exists");
+        case 500:
+          throw new Error("Internal Server Error");
+        default:
+          throw new Error("unknown error");
+      }
+    }  
+    console.log(response.body);
+    
+    
+    const data: ServerResponse = await response.json();
+    handleAddNewItem(data);
+    
      if(id == ""){
-      console.log("Bedingung erfüllt");
-    setData(data1)
     if (setCreatedUrlId) { 
-      setCreatedUrlId(data1.id);
+      setCreatedUrlId(data.id);
   }
      }
-    console.log(data1);
+
+    console.log(data);
     
   } catch (error) {
     console.error("Fehler:", error);
+    if (error instanceof Error) { 
+      setErrorMessage(error.message);
+    } else {
+      setErrorMessage("unknown error");
+    }
+    
   }
 }
 
@@ -78,11 +97,16 @@ const  addToServer = async(id:string, url:string) =>{
       addToServer(id,url);   
     };
 
+    const handleAddNewItem = (newItem :ServerResponse ) => {
+      if (data) {
+        const updatedData = [...data, newItem];
+        setDataList(updatedData);
+      }
+    }
 
 
 
-
- return {url,setUrl,send,sendWithID}
+ return {url,setUrl,send,sendWithID,errorMessageAdd}
 
 }
 
