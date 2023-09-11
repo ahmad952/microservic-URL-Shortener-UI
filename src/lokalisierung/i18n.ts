@@ -44,7 +44,7 @@ const resources = {
         "enterID": "Bitte geben Sie die ID ein:",
         "cancel"  : "Abbrechen",
         "URLEdit" :"URL und TTL Bearbeiten",
-        "switch"   : "auf Englische",
+        "switch"   : "auf Englisch",
         "validURL":"Bitte geben Sie eine gültige URL ein!",
 
     },
