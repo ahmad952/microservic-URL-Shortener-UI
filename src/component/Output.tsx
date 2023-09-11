@@ -30,10 +30,10 @@ function Output({ createdUrlId }: OutputProps) {
           pr: 1,
           border: createdUrlId !== "" ? "1px solid black" : "1px solid #d3d3d3",
           color: createdUrlId !== "" ? "black" : "grey",
-          width: createdUrlId == "" ? 205 : 220,
+          width: createdUrlId === "" ? 205 : 220,
         }}
       >
-        <p>{createdUrlId == "" ? t("output") : url}</p>
+        <p>{createdUrlId === "" ? t("output") : url}</p>
       </Paper>
 
       <Button variant="contained" onClick={handleCopy}>

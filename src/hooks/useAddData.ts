@@ -64,7 +64,7 @@ const  addToServer = async(id:string, url:string) =>{
     const data: ServerResponse = await response.json();
     handleAddNewItem(data);
     
-     if(id == ""){
+     if(id === ""){
     if (setCreatedUrlId) { 
       setCreatedUrlId(data.id);
   }

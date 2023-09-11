@@ -55,10 +55,9 @@ function EditDialog({ selectedId }: EditDialogProps) {
   };
 
   const findElement = (id: string) => {
-    data?.map((item) => {
-      if (item.id == selectedId) {
+    data?.forEach((item) => {
+      if (item.id === selectedId) {
         setUrl(item.url);
-
         setttl(item.ttlInSeconds);
         console.log(ttl);
       }
