@@ -12,7 +12,7 @@ const AdminScreen = () => {
         width: "100%",
       }}
     >
-      <Box sx={{ width: "800px" }}>
+      <Box sx={{ width: "900px" }}>
         <UrlTable />
       </Box>
     </Box>

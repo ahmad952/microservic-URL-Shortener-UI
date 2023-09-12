@@ -4,13 +4,13 @@ import { useTranslation } from "react-i18next";
 import useAddData from "../hooks/useAddData";
 import { isValidURL } from "../features/helpers";
 type InputFieldProps = {
-  setCreatedUrlId: React.Dispatch<React.SetStateAction<string>>;
+  setAutoCreatedId: React.Dispatch<React.SetStateAction<string>>;
 };
 
-function InputField({ setCreatedUrlId }: InputFieldProps) {
+function InputField({ setAutoCreatedId }: InputFieldProps) {
   const { t } = useTranslation();
 
-  const { url, setUrl, send } = useAddData(setCreatedUrlId);
+  const { url, setUrl, send } = useAddData(setAutoCreatedId);
 
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
@@ -47,7 +47,7 @@ function InputField({ setCreatedUrlId }: InputFieldProps) {
         variant="contained"
         onClick={(e) => {
           if (handleUrlCheck()) {
-            send(e, url);
+            send(url, e);
           } else {
           }
         }}

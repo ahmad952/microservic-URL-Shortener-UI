@@ -1,9 +1,11 @@
-import {useContext ,useState} from 'react'
+import {useContext ,useState,useRef} from 'react'
 import { RequestBody, ServerResponse } from '../models/dataTypes';
 import DataContext from '../context/DataContext';
 
 const useDataManagement = () => {
   const [errorMessageM,setErrorMessageM]= useState<string>("")
+  const prevDataRef = useRef<ServerResponse[] | null>(null);
+
 
     const dataContext = useContext(DataContext);
     if (!dataContext) {
@@ -33,16 +35,24 @@ const useDataManagement = () => {
             setDataList(newData);
             }
           } else {
-            switch(response.status) {
+           
+          switch(response.status) {
               case 400:
-                throw new Error("Bad Request");
+                setErrorMessageM("Bad Request");
+                break;
+
               case 404:
-                throw new Error("NotFound");
+                setErrorMessageM("NotFound");
+                break;
+
               case 500:
-                throw new Error("Internal Server Error");
+                setErrorMessageM("Internal Server Error");
+                break;
+
               default:
-                throw new Error("unknown error");
+                setErrorMessageM("unknown error");
             };
+
           }
         } catch (error) {
           console.error("There was an error deleting the item:", error);
@@ -95,17 +105,26 @@ const useDataManagement = () => {
             const fetchedData = await response.json();
                 if(response.ok){
                const sortedData = sort(fetchedData);
-               setDataList(sortedData);
+               if (JSON.stringify(prevDataRef.current) !== JSON.stringify(sortedData)) {
+                setDataList(sortedData);
+                prevDataRef.current = sortedData;
+            }
+               
                   }
                  else{
+                  
                   switch(response.status) {
                     case 400:
-                      throw new Error("Bad Request");
+                      setErrorMessageM("Bad Request");
+                      break;            
                     case 500:
-                      throw new Error("Internal Server Error");
+                      setErrorMessageM("Internal Server Error");
+                      break;
+      
                     default:
-                      throw new Error("unknown error");
+                      setErrorMessageM("unknown error");
                   };
+
                  }
 
 
@@ -126,8 +145,7 @@ const useDataManagement = () => {
         url,
         ttlInSeconds,
       };
-      console.log(body);
-
+      
       try {
         const response = await fetch(`https://urlshortener.smef.io/urls/${id}`, {
           method: "PUT",
@@ -144,13 +162,19 @@ const useDataManagement = () => {
 
           switch(response.status) {
               case 400:
-                throw new Error("Bad Request");
+                setErrorMessageM("Bad Request");
+                break;
+
               case 404:
-                throw new Error("NotFound");
+                setErrorMessageM("NotFound");
+                break;
+
               case 500:
-                throw new Error("Internal Server Error");
+                setErrorMessageM("Internal Server Error");
+                break;
+
               default:
-                throw new Error("unknown error");
+                setErrorMessageM("unknown error");
             };
         }
       } catch (error) {
@@ -167,7 +191,7 @@ const useDataManagement = () => {
     };
 
 
-     return { handleDelete, getData,handleEdit,errorMessageM  };
+     return { handleDelete, getData,handleEdit,errorMessageM ,setErrorMessageM };
 }
 
 

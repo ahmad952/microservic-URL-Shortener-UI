@@ -59,7 +59,6 @@ function EditDialog({ selectedId }: EditDialogProps) {
       if (item.id === selectedId) {
         setUrl(item.url);
         setttl(item.ttlInSeconds);
-        console.log(ttl);
       }
     });
   };

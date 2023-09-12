@@ -4,7 +4,7 @@ import InputField from "../component/InputField";
 import Box from "@mui/material/Box/Box";
 
 function UserScreen() {
-  const [createdUrlId, setCreatedUrlId] = useState<string>("");
+  const [autoCreatedId, setAutoCreatedId] = useState<string>("");
   return (
     <Box
       sx={{
@@ -17,8 +17,8 @@ function UserScreen() {
       }}
     >
       <Box>
-        <InputField setCreatedUrlId={setCreatedUrlId} />
-        <Output createdUrlId={createdUrlId} />
+        <InputField setAutoCreatedId={setAutoCreatedId} />
+        <Output autoCreatedId={autoCreatedId} />
       </Box>
     </Box>
   );

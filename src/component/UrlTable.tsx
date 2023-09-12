@@ -24,21 +24,23 @@ function UrlTable() {
   const dataContext = useContext(DataContext);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [Message, setMessage] = useState<string>("");
-
+  const [isError, setIsError] = useState<boolean>(true);
   if (!dataContext) {
     throw new Error("DataContext is not available!");
   }
 
   const { data } = dataContext;
 
-  const { handleDelete, getData, errorMessageM } = useDataManagement();
+  const { handleDelete, getData, errorMessageM, setErrorMessageM } =
+    useDataManagement();
 
-  const { sendWithID, errorMessageAdd } = useAddData();
+  const { errorMessageAdd, send, setErrorMessageAdd } = useAddData();
 
   const handleUrlCheck = (url: string) => {
     if (!isValidURL(url)) {
       setSnackbarOpen(true);
       setMessage(t("validURL"));
+      setIsError(false);
       isValidURL(url);
     }
 
@@ -52,20 +54,26 @@ function UrlTable() {
     if (url && handleUrlCheck(url)) {
       const idPrompt = prompt(t("enterID"));
       const idn = idPrompt ? idPrompt.trim() : "";
-      sendWithID(idn, url);
-      setMessage(errorMessageAdd);
-      setMessage(errorMessageM);
+      send(url, undefined, idn);
     }
   };
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      getData();
+    }, 30000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
     getData();
-  }, [data, getData]);
+  }, [data]);
 
   useEffect(() => {
     if (errorMessageAdd) {
       setMessage(errorMessageAdd);
-
       setSnackbarOpen(true);
     } else {
       if (errorMessageM) {
@@ -73,7 +81,10 @@ function UrlTable() {
         setSnackbarOpen(true);
       }
     }
-  }, [errorMessageAdd, errorMessageM]);
+    setErrorMessageM("");
+    setErrorMessageAdd("");
+    setIsError(true);
+  }, [errorMessageAdd, errorMessageM, setErrorMessageAdd, setErrorMessageM]);
 
   return (
     <div>
@@ -132,7 +143,7 @@ function UrlTable() {
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}
-          severity="error"
+          severity={isError ? "error" : "warning"}
           sx={{ width: "100%" }}
         >
           {Message}
