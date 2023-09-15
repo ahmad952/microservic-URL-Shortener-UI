@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextField, Box, Snackbar, Alert } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import useAddData from "../hooks/useAddData";
@@ -9,19 +9,34 @@ type InputFieldProps = {
 
 function InputField({ setAutoCreatedId }: InputFieldProps) {
   const { t } = useTranslation();
+  const [isError, setIsError] = useState<boolean>(true);
 
-  const { url, setUrl, send } = useAddData(setAutoCreatedId);
+  const { url, setUrl, send, errorMessageAdd, setErrorMessageAdd } =
+    useAddData(setAutoCreatedId);
+  const [Message, setMessage] = useState<string>("");
 
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
   const handleUrlCheck = () => {
     if (!isValidURL(url)) {
+      setMessage(t("validURL"));
       setSnackbarOpen(true);
+      setIsError(false);
       isValidURL(url);
     }
 
     return isValidURL(url);
   };
+
+  useEffect(() => {
+    if (errorMessageAdd) {
+      setMessage(errorMessageAdd);
+      setSnackbarOpen(true);
+    }
+
+    setErrorMessageAdd("");
+    setIsError(true);
+  }, [errorMessageAdd, setErrorMessageAdd]);
 
   return (
     <Box
@@ -61,10 +76,10 @@ function InputField({ setAutoCreatedId }: InputFieldProps) {
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}
-          severity="warning"
+          severity={isError ? "error" : "warning"}
           sx={{ width: "100%" }}
         >
-          {t("validURL")}
+          {Message}
         </Alert>
       </Snackbar>
     </Box>
